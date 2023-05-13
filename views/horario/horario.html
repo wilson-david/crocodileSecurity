@@ -106,6 +106,7 @@
                     <thead>
                         <tr>
                             <th style="text-align: center;">Acciones</th>
+                            <th style="min-width: 100px; text-align: center;">Estado</th>
                             <th style="min-width: 100px; text-align: center;">Nombre puesto</th>
                             <th style="min-width: 100px; text-align: center;">tareas</th>
                             <th style="text-align: center;">Direccion</th>
@@ -223,7 +224,7 @@
             let ciudad = $("#ciudad").val();
             let horario = $("#horario").val()
             let fecha = $("#fecha").val();
-
+            let estado = $("#estado").val();
             $.ajax({
                 url: "../../controllers/horario/setHorario.php",
                 type: 'POST',
@@ -236,7 +237,8 @@
                     guarda: guarda,
                     ciudad: ciudad,
                     horario: horario,
-                    fecha: fecha
+                    fecha: fecha,
+                    estado: estado
                 },
                 dataType: 'json',
                 success: function(data) {
@@ -271,6 +273,7 @@
         let ciudad = $("#ciudad").val();
         let horario = $("#horario").val()
         let fecha = $("#fecha").val();
+        let estado = $("#estado").val();
         $.ajax({
                 url: "../../controllers/horario/setHorario.php",
                 type: 'POST',
@@ -283,7 +286,8 @@
                     guarda: guarda,
                     ciudad: ciudad,
                     horario: horario,
-                    fecha: fecha
+                    fecha: fecha,
+                    estado: estado
                 },
                 dataType: 'json',
                 success: function(data) {
@@ -306,7 +310,7 @@
             
             });
     }
-    function cargar_datos(id,nombre_puesto,tareas,direccion,barrio,guarda,ciudad,horario,fecha){
+    function cargar_datos(id,nombre_puesto,tareas,direccion,barrio,guarda,ciudad,horario,fecha,estado){
         $("#btn_guardar").css('display','none');
         $("#btn_actualizar").css('display','');     
         $("#label_estado").css('display','');    
@@ -321,6 +325,7 @@
         $("#ciudad").val(ciudad);
         $("#horario").val(horario)
         $("#fecha").val(fecha);
+        $("#estado").val(estado);
     }
 
     function limpiar(){

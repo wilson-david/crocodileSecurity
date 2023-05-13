@@ -14,7 +14,8 @@ $objGetEmpleado = new Empleado;
         $data['CONTENIDO'] .= '<th><button type="button" class="btn btn-success btn-circle" id="edit_btn"
                                     onclick="cargar_datos('.$row['id'].',\''.$row['nombre_puesto'].'\',\''.$row['tareas'].'\',
                                     \''.$row['direccion'].'\',\''.$row['barrio'].'\','.$row['id_empleado'].',
-                                    \''.$row['ciudad'].'\',\''.$row['horario'].'\',\''.$row['fecha_puesto'].'\');" ;"><i class="fa fa-pencil"></i></button></th>';
+                                    \''.$row['ciudad'].'\',\''.$row['horario'].'\',\''.$row['fecha_puesto'].'\','.$row['estado'].');" ;"><i class="fa fa-pencil"></i></button></th>';
+        $data['CONTENIDO'] .= '<th style="border: 1px solid black;">'.$row['estado'].' </th> ';
         $data['CONTENIDO'] .= '<th style="border: 1px solid black;">'.$row['nombre_puesto'].' </th> ';
         $data['CONTENIDO'] .= '<th style="border: 1px solid black;">'.$row['tareas'].'</th> ';
         $data['CONTENIDO'] .= '<th style="border: 1px solid black;">'.$row['direccion'].'</th> ';

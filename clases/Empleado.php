@@ -76,6 +76,10 @@ class Empleado{
         $aux_transporte,
         $fecha_sistema,
         $estado){
+            if ($this->con == null) {
+                $this->con = new Conexion();
+            }
+
         if ($this->con->Conectarse() == true) {
             $query = "UPDATE empleado
                         SET nombres = '$nombre',
@@ -164,7 +168,7 @@ class Empleado{
     }
 
     // actualziar horario
-    function modificar_horario($id,$puesto, $tareas, $direccion, $barrio, $guarda, $ciudad, $horario, $fecha, $fecha_sistema){
+    function modificar_horario($id,$puesto, $tareas, $direccion, $barrio, $guarda, $ciudad, $horario, $fecha, $fecha_sistema,$estado){
         if ($this->con == null) {
             $this->con = new Conexion();
         }
@@ -177,7 +181,8 @@ class Empleado{
                             id_empleado = $guarda,
                             ciudad = '$ciudad',
                             horario = '$horario',
-                            fecha_puesto = '$fecha'
+                            fecha_puesto = '$fecha',
+                            estado = $estado
                             WHERE id = $id ";
 
 
