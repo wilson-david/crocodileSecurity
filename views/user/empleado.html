@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <title>Empleado</title>
+</head>
+<!-- <style>
+    div {
+        border: 1px solid black;
+    }
+</style> -->
+
+<body>
+    <div class="container text-center">
+        <div class="row">
+            <!-- <div class="col-sm-2">col-sm-4</div> -->
+            <div class="col-sm-12">
+                <h3>Empleado</h3>
+                <form class="row g-3 needs-validation" id="data_form" action="javascript:guardarInfo()" novalidate>
+                    <input type="hidden" id="id_empleado" value="0">
+                    <div class="col-md-3">
+                        <label for="validationCustom02" class="form-label">Nombres(*):</label>
+                        <input type="text" class="form-control" id="nombre" value="" required>
+                        <div class="invalid-feedback">
+                            Este campo no puede estar vacio
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="validationCustom02" class="form-label">Apellido(*):</label>
+                        <input type="text" class="form-control" id="apellido" value="" required>
+                        <div class="invalid-feedback">
+                            Este campo no puede estar vacio
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="validationCustom04" class="form-label">Tipo documento(*):</label>
+                        <select class="form-select" id="tipo_doc" required>
+                            <option selected disabled value="">...</option>
+                            <option value="1">Cedula ciudadania</option>
+                            <option value="2">pasaporte</option>
+                        </select>
+                        <div class="invalid-feedback">
+                            Seleccione una opcion
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="validationCustom04" class="form-label">Numero documento(*):</label>
+                        <input type="text" class="form-control" id="num_doc" value="" required>
+                        <div class="invalid-feedback">
+                            Este campo no puede estar vacio
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="validationCustom04" class="form-label">Correo(*):</label>
+                        <input type="text" class="form-control" id="correo" value="" required>
+                        <div class="invalid-feedback">
+                            Este campo no puede estar vacio
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="validationCustom04" class="form-label">Telefono(*):</label>
+                        <input type="number" class="form-control" id="telefono" value="" required>
+                        <div class="invalid-feedback">
+                            Este campo no puede estar vacio
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="validationCustom04" class="form-label">Fecha de nacimiento(*):</label>
+                        <input type="date" class="form-control" id="fecha_nacimiento" value="" required>
+                        <div class="invalid-feedback">
+                            Ingrese fecha
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="validationCustom04" class="form-label">EPS(*):</label>
+                        <input type="text" class="form-control" id="eps" value="" required>
+                        <div class="invalid-feedback">
+                            Este campo no puede estar vacio
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="validationCustom04" class="form-label">ARL(*):</label>
+                        <input type="text" class="form-control" id="arl" value="" required>
+                        <div class="invalid-feedback">
+                            Este campo no puede estar vacio
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="validationCustom04" class="form-label">Fonde de cesantias(*):</label>
+                        <input type="text" class="form-control" id="cesantias" value="" required>
+                        <div class="invalid-feedback">
+                            Este campo no puede estar vacio
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="validationCustom04" class="form-label">Fonde de Pensiones(*):</label>
+                        <input type="text" class="form-control" id="pensiones" value="" required>
+                        <div class="invalid-feedback">
+                            Este campo no puede estar vacio
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="validationCustom04" class="form-label" id="label_estado" style="display: none;">Estado(*):</label>
+                        <select class="form-select" id="estado" style="display: none;">
+                            <option selected disabled value=""></option>
+                            <option value="1">Activo</option>
+                            <option value="0">Inactivo</option>
+                        </select>
+                        <div class="invalid-feedback">
+                            Seleccione una opcion
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="validationCustom04" class="form-label">Salario(*):</label>
+                        <input type="number" class="form-control" id="salario" value="" required>
+                        <div class="invalid-feedback">
+                            Este campo no puede estar vacio
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="validationCustom04" class="form-label">Auxilio de transporte(*):</label>
+                        <input type="number" class="form-control" id="aux_transporte" value="" required>
+                        <div class="invalid-feedback">
+                            Este campo no puede estar vacio
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <button class="btn btn-primary" id="btn_guardar"  type="submit">Guardar</button>
+                        <button class="btn btn-success" id="btn_actualizar" style="display: none;" type="button" onclick="actualizar();">Actualizar</button>
+                    </div>
+                </form>
+            </div>
+           
+            <div class="row">
+                <div class="col-sm-12">
+                    <br>
+                    <table id="tabla_empleado" class="display table table-striped table-hover" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th style="text-align: center;">Acciones</th>
+                            <th style="min-width: 100px; text-align: center;">Nombre</th>
+                            <th style="min-width: 100px; text-align: center;">Apellido</th>
+                            <th style="text-align: center;">Tipo doc</th>
+                            <th style="min-width: 150px; text-align: center;">#Documento</th>
+                            <th style="min-width: 150px; text-align: center;">Correo</th>
+                            <th style="min-width: 150px; text-align: center;">Telefono</th>
+                            <th style="min-width: 100px; text-align: center;">Fecha nacimiento</th>
+                            <th style="min-width: 110px; text-align: center;">Eps</th>
+                            <th style="min-width: 110px; text-align: center;">Arl</th>
+                            <th style="min-width: 110px; text-align: center;">Cesantias</th>
+                            <th style="min-width: 110px; text-align: center;">Pensiones</th>
+                            <th style="min-width: 110px; text-align: center;">Salario</th>
+                            <th style="min-width: 110px; text-align: center;">Axu transporte</th>
+                            <th style="text-align: center;">Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody id="contenido_tabla">
+                        
+                    </tbody>
+                    </table>
+                </div>
+            </div>
+            <!-- <div class="col-sm-2">col-sm-4</div> -->
+        </div>
+    </div>
+</body>
+
+<script src="../../js/jquery-3.6.4.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+    crossorigin="anonymous"></script>
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+<script>
+    // Example starter JavaScript for disabling form submissions if there are invalid fields
+    (() => {
+        'use strict'
+
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        const forms = document.querySelectorAll('.needs-validation')
+
+        // Loop over them and prevent submission
+        Array.from(forms).forEach(form => {
+            form.addEventListener('submit', event => {
+                if (!form.checkValidity()) {
+                    event.preventDefault()
+                    event.stopPropagation()
+                }
+
+                form.classList.add('was-validated')
+            }, false)
+        })
+    })()
+    
+    var tabla = $("#tabla_empleado").DataTable({
+                "scrollX": true,
+                "ordering": true,
+                "searching": false,
+                "bInfo": false,
+                "bPaginate":false,
+                "aLengthMenu": [
+                    [10, 25, 50, -1],
+                    [10, 25, 50, "All"]
+                ],
+                "columnDefs": [{ "orderable": false, "className": "text-center", "targets": [0] }],
+                "pageLength": 10,
+                "bLengthChange": false,
+                "oLanguage": {
+                    "sLengthMenu": "Mostrando _MENU_ registros por p&aacute;gina",
+                    "sZeroRecords": "...",
+                    "sInfo": "Mostrando _START_ a _END_ de _TOTAL_ registros",
+                    //"sInfoEmpty": "Mostrando 0 a 0 de 0 registros",
+                    "oPaginate": {
+                        "sFirst": "Primero",
+                        "sPrevious": "<<",
+                        "sNext": ">>",
+                        "sLast": "\xdaltimo"
+                    },
+                    "sInfoFiltered": "(Filtrado de un total de _MAX_ registros)"
+                    //"sProcessing": "<img src='../../../img/giphy.gif' width='50'/>"
+                }
+            });
+            consultar();
+
+
+
+    function consultar(){
+        $.ajax({
+            url: "../../controllers/empleado/getEmpleado.php",
+            dataType: 'json',
+            success: function(data) {
+                $("#contenido_tabla").append(data.CONTENIDO);
+               
+            },
+            error: function(xhr, status, error) {
+                console.log("Error al procesar la solicitud:", error);
+            }
+        });
+    }
+
+    
+    
+    function guardarInfo() {
+            let id = $("#id_empleado").val();
+            let nombre = $("#nombre").val();
+            let apellido = $("#apellido").val();
+            let tipo_doc = $("#tipo_doc").val();    
+            let num_doc = $("#num_doc").val();
+            let correo = $("#correo").val();
+            let telefono = $("#telefono").val();
+            let fecha = $("#fecha_nacimiento").val()
+            let eps = $("#eps").val();
+            let arl = $("#arl").val();
+            let cesantia = $("#cesantias").val();
+            let pension = $("#pensiones").val();
+            let salario = $("#salario").val();
+            let aux_transporte = $("#aux_transporte").val();
+            $.ajax({
+                url: "../../controllers/empleado/setEmpleado.php",
+                type: 'POST',
+                data: {
+                    id:id,
+                    nombre: nombre,
+                    apellido: apellido,
+                    tipo_doc: tipo_doc,
+                    num_doc: num_doc,
+                    correo: correo,
+                    telefono: telefono,
+                    fecha: fecha,
+                    eps:eps,
+                    arl: arl,
+                    cesantia: cesantia,
+                    pension: pension,
+                    salario: salario,
+                    aux_transporte: aux_transporte
+                },
+                dataType: 'json',
+                success: function(data) {
+                        if (data.success === 'success') {
+                            alert("guardo");
+                            /* swal({
+                                title: "\u00c9xito",
+                                text: "Se carg\u00f3 el inventario exitosamente.",
+                                type: "success"
+                            }); */
+                            location.reload();        
+                        } else {
+                            alert("No guardo");
+                            /* toastr.warning("Inventario", "No se logr\u00f3 cargar el inventario."); */
+                        }
+                },
+            
+            });
+        }
+        
+    function cargar_datos(id,nombre,apellido,tipo_doc,num_doc,correo,tel,fecha_naci,eps,arl,cesantias,pensiones,salario,aux_transporte,estado){
+        $("#btn_guardar").css('display','none');
+        $("#btn_actualizar").css('display','');    
+        $("#label_estado").css('display','');    
+        $("#estado").css('display','');    
+        
+        $("#id_empleado").val(id);
+        $("#nombre").val(nombre);
+        $("#apellido").val(apellido);
+        $("#tipo_doc").val(tipo_doc);
+        $("#num_doc").val(num_doc);
+        $("#correo").val(correo);
+        $("#telefono").val(tel);
+        $("#fecha_nacimiento").val(fecha_naci);
+        $("#eps").val(eps);
+        $("#arl").val(arl);
+        $("#cesantias").val(cesantias);
+        $("#pensiones").val(pensiones);
+        $("#salario").val(salario);
+        $("#aux_transporte").val(aux_transporte);
+        $("#estado").val(estado);
+    }
+
+    function actualizar(){
+    let id_empleado = $("#id_empleado").val();
+    let nombre = $("#nombre").val();
+    let apellido = $("#apellido").val();
+    let tipo_doc = $("#tipo_doc").val();    
+    let num_doc = $("#num_doc").val();
+    let correo = $("#correo").val();
+    let telefono = $("#telefono").val();
+    let fecha = $("#fecha_nacimiento").val()
+    let eps = $("#eps").val();
+    let arl = $("#arl").val();
+    let cesantia = $("#cesantias").val();
+    let pension = $("#pensiones").val();
+    let salario = $("#salario").val();
+    let aux_transporte = $("#aux_transporte").val();
+    let estado = $("#estado").val();
+        $.ajax({
+                url: "../../controllers/empleado/setEmpleado.php",
+                type: 'POST',
+                data: {
+                    id: id_empleado,
+                    nombre: nombre,
+                    apellido: apellido,
+                    tipo_doc: tipo_doc,
+                    num_doc: num_doc,
+                    correo: correo,
+                    telefono: telefono,
+                    fecha: fecha,
+                    eps:eps,
+                    arl: arl,
+                    cesantia: cesantia,
+                    pension: pension,
+                    salario: salario,
+                    aux_transporte: aux_transporte,
+                    estado:estado
+                },
+                dataType: 'json',
+                success: function(data) {
+                        if(data.success === 'update'){
+                            alert("actualizo");
+                            limpiar();
+                            window.location.reload();
+                        } else {
+                            alert("No guardo");
+                            /* toastr.warning("Inventario", "No se logr\u00f3 cargar el inventario."); */
+                        }
+                },
+            
+            });
+    }
+
+    function limpiar(){
+        $("#id_empleado").val(0);
+        $("#nombre").val("");
+        $("#apellido").val("");
+        $("#tipo_doc").val("");
+        $("#num_doc").val("");
+        $("#correo").val("");
+        $("#telefono").val("");
+        $("#fecha_nacimiento").val("");
+        $("#eps").val("");
+        $("#arl").val("");
+        $("#cesantias").val("");
+        $("#pensiones").val("");
+        $("#salario").val("");
+        $("#aux_transporte").val("");
+        $("#estado").val("");
+    }
+</script>
+</html>

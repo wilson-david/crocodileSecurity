@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>Horarios</title>
+</head>
+<body>
+    <div class="container text-center">
+        <div class="row">
+            <!-- <div class="col-sm-2">col-sm-4</div> -->
+            <div class="col-sm-12">
+                <h3>Horarios</h3>
+                <form class="row g-3 needs-validation" id="data_form" action="javascript:guardarInfo()" novalidate>
+                    <input type="hidden" id="id_horario" value="0">
+                    <div class="col-md-3">
+                        <label for="validationCustom02" class="form-label">Nombre puesto (*):</label>
+                        <input type="text" class="form-control" id="nombre_puesto" value="" required>
+                        <div class="invalid-feedback">
+                            Este campo no puede estar vacio
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="validationCustom02" class="form-label">Tareas (*):</label>
+                        <input type="text" class="form-control" id="tareas" value="" required>
+                        <div class="invalid-feedback">
+                            Este campo no puede estar vacio
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="validationCustom04" class="form-label">Direccion (*):</label>
+                        <input type="text" class="form-control" id="direccion" value="" required>
+                        <div class="invalid-feedback">
+                            Este campo no puede estar vacio
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="validationCustom04" class="form-label">Barrio (*):</label>
+                        <input type="text" class="form-control" id="barrio" value="" required>
+                        <div class="invalid-feedback">
+                            Este campo no puede estar vacio
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="validationCustom04" class="form-label">Guarda (*):</label>
+                        <select class="form-select" id="guarda" required>
+                            <option value=""> .. </option>
+                        </select>
+                        <div class="invalid-feedback">
+                            Este campo no puede estar vacio
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <label for="validationCustom04" class="form-label">Ciudad (*):</label>
+                        <input type="text" class="form-control" id="ciudad" value="" required>
+                        <div class="invalid-feedback">
+                            Ingrese fecha
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <label for="validationCustom04" class="form-label">Horario (*):</label>
+                        <select class="form-select" id="horario" required>
+                            <option selected disabled value="">...</option>
+                            <option value="6am - 6pm">6 am - 6 pm</option>
+                            <option value="6pm - 6am">6 pm - 6 am</option>
+                        </select>
+                        <div class="invalid-feedback">
+                            Este campo no puede estar vacio
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <label for="validationCustom04" class="form-label">Fecha (*):</label>
+                        <input type="date" class="form-control" id="fecha" value="" required>
+                        <div class="invalid-feedback">
+                            Este campo no puede estar vacio
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <label for="validationCustom04" class="form-label" id="label_estado" style="display: none;">Estado(*):</label>
+                        <select class="form-select" id="estado" style="display: none;">
+                            <option selected disabled value=""></option>
+                            <option value="1">Activo</option>
+                            <option value="0">Inactivo</option>
+                        </select>
+                        <div class="invalid-feedback">
+                            Seleccione una opcion
+                        </div>
+                    </div>
+                    
+                    <div class="col-12">
+                        <button class="btn btn-primary" id="btn_guardar"  type="submit">Guardar</button>
+                        <button class="btn btn-success" id="btn_actualizar" style="display: none;" type="button" onclick="actualizar();">Actualizar</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12">
+                    <br>
+                    <table id="tabla_horario" class="display table table-striped table-hover" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th style="text-align: center;">Acciones</th>
+                            <th style="min-width: 100px; text-align: center;">Nombre puesto</th>
+                            <th style="min-width: 100px; text-align: center;">tareas</th>
+                            <th style="text-align: center;">Direccion</th>
+                            <th style="min-width: 150px; text-align: center;">Barrio</th>
+                            <th style="min-width: 150px; text-align: center;">Guarda</th>
+                            <th style="min-width: 150px; text-align: center;">Ciudad</th>
+                            <th style="min-width: 100px; text-align: center;">Horario</th>
+                            <th style="min-width: 110px; text-align: center;">Fecha</th>
+                        </tr>
+                    </thead>
+                    <tbody id="contenido_tabla">
+                        
+                    </tbody>
+                    </table>
+                </div>
+            </div>
+            <!-- <div class="col-sm-2">col-sm-4</div> -->
+        </div>
+    </div>
+</body>
+<script src="../../js/jquery-3.6.4.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+    crossorigin="anonymous"></script>
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+
+<script>
+    // Example starter JavaScript for disabling form submissions if there are invalid fields
+    (() => {
+        'use strict'
+
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        const forms = document.querySelectorAll('.needs-validation')
+
+        // Loop over them and prevent submission
+        Array.from(forms).forEach(form => {
+            form.addEventListener('submit', event => {
+                if (!form.checkValidity()) {
+                    event.preventDefault()
+                    event.stopPropagation()
+                }
+
+                form.classList.add('was-validated')
+            }, false)
+        })
+    })()
+
+    $("#tabla_horario").DataTable({
+                "scrollX": true,
+                "ordering": true,
+                "searching": false,
+                "bInfo": false,
+                "bPaginate":false,
+                "aLengthMenu": [
+                    [10, 25, 50, -1],
+                    [10, 25, 50, "All"]
+                ],
+                "columnDefs": [{ "orderable": false, "className": "text-center", "targets": [0] }],
+                "pageLength": 10,
+                "bLengthChange": false,
+                "oLanguage": {
+                    "sLengthMenu": "Mostrando _MENU_ registros por p&aacute;gina",
+                    "sZeroRecords": "...",
+                    "sInfo": "Mostrando _START_ a _END_ de _TOTAL_ registros",
+                    //"sInfoEmpty": "Mostrando 0 a 0 de 0 registros",
+                    "oPaginate": {
+                        "sFirst": "Primero",
+                        "sPrevious": "<<",
+                        "sNext": ">>",
+                        "sLast": "\xdaltimo"
+                    },
+                    "sInfoFiltered": "(Filtrado de un total de _MAX_ registros)"
+                    //"sProcessing": "<img src='../../../img/giphy.gif' width='50'/>"
+                }
+            });
+
+
+    consultar_guarda();
+
+    function consultar_guarda(){
+        $.ajax({
+            url: "../../controllers/horario/getDatos.php",
+            dataType: 'json',
+            success: function(data) {
+                $("#guarda").append(data.CONTENIDO);
+
+            },
+            error: function(xhr, status, error) {
+                console.log("Error al procesar la solicitud:", error);
+            }
+        });
+    }
+
+    consultar_datos_tabla();
+    function consultar_datos_tabla(){
+        $.ajax({
+            url: "../../controllers/horario/getDatosTbl.php",
+            dataType: 'json',
+            success: function(data) {
+                $("#contenido_tabla").append(data.CONTENIDO);
+            },
+            error: function(xhr, status, error) {
+                console.log("Error al procesar la solicitud:", error);
+            }
+        });
+    }
+
+    function guardarInfo() {
+            let id = $("#id_horario").val();
+            let puesto = $("#nombre_puesto").val();
+            let tareas = $("#tareas").val();
+            let direccion = $("#direccion").val();    
+            let barrio = $("#barrio").val();
+            let guarda = $("#guarda").val();
+            let ciudad = $("#ciudad").val();
+            let horario = $("#horario").val()
+            let fecha = $("#fecha").val();
+
+            $.ajax({
+                url: "../../controllers/horario/setHorario.php",
+                type: 'POST',
+                data: {
+                    id:id,
+                    puesto: puesto,
+                    tareas: tareas,
+                    direccion: direccion,
+                    barrio: barrio,
+                    guarda: guarda,
+                    ciudad: ciudad,
+                    horario: horario,
+                    fecha: fecha
+                },
+                dataType: 'json',
+                success: function(data) {
+                        if (data.success === 'success') {
+                            alert("El horario a sido creado con exito");
+                            /* swal({
+                                title: "\u00c9xito",
+                                text: "Se carg\u00f3 el inventario exitosamente.",
+                                type: "success"
+                            }); */
+                            limpiar();
+                            window.location.reload();      
+                        } else if(data.error === 'nombre_duplicado'){
+                            alert("Ya existe un puesto de trabajo  con el nombre ");
+                            /* toastr.warning("Inventario", "No se logr\u00f3 cargar el inventario."); */
+                        }else{
+                            alert("No guardo");
+                        }
+                        
+                },
+            
+            });
+        }
+
+    function actualizar(){
+        let id = $("#id_horario").val();
+        let puesto = $("#nombre_puesto").val();
+        let tareas = $("#tareas").val();
+        let direccion = $("#direccion").val();    
+        let barrio = $("#barrio").val();
+        let guarda = $("#guarda").val();
+        let ciudad = $("#ciudad").val();
+        let horario = $("#horario").val()
+        let fecha = $("#fecha").val();
+        $.ajax({
+                url: "../../controllers/horario/setHorario.php",
+                type: 'POST',
+                data: {
+                    id:id,
+                    puesto: puesto,
+                    tareas: tareas,
+                    direccion: direccion,
+                    barrio: barrio,
+                    guarda: guarda,
+                    ciudad: ciudad,
+                    horario: horario,
+                    fecha: fecha
+                },
+                dataType: 'json',
+                success: function(data) {
+                    if (data.success === 'update') {
+                            alert("El horario a sido Actualizado con exito");
+                            /* swal({
+                                title: "\u00c9xito",
+                                text: "Se carg\u00f3 el inventario exitosamente.",
+                                type: "success"
+                            }); */
+                            limpiar();
+                            window.location.reload();      
+                        } else if(data.error === 'nombre_duplicado'){
+                            alert("Ya existe un puesto de trabajo  con el nombre ");
+                            /* toastr.warning("Inventario", "No se logr\u00f3 cargar el inventario."); */
+                        }else{
+                            alert("No guardo");
+                        }
+                },
+            
+            });
+    }
+    function cargar_datos(id,nombre_puesto,tareas,direccion,barrio,guarda,ciudad,horario,fecha){
+        $("#btn_guardar").css('display','none');
+        $("#btn_actualizar").css('display','');     
+        $("#label_estado").css('display','');    
+        $("#estado").css('display','')  
+        
+        $("#id_horario").val(id);
+        $("#nombre_puesto").val(nombre_puesto);
+        $("#tareas").val(tareas);
+        $("#direccion").val(direccion);    
+        $("#barrio").val(barrio);
+        $("#guarda").val(guarda);
+        $("#ciudad").val(ciudad);
+        $("#horario").val(horario)
+        $("#fecha").val(fecha);
+    }
+
+    function limpiar(){
+        $("#id_horario").val(0);
+        $("#nombre_puesto").val("");
+        $("#tareas").val("");
+        $("#direccion").val("");    
+        $("#barrio").val("");
+        $("#guarda").val("");
+        $("#ciudad").val("");
+        $("#horario").val("")
+        $("#fecha").val("");
+    }
+</script>
+</html>
