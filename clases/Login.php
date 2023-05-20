@@ -17,7 +17,10 @@ class Login{
         $data = [];
         if ($this->con->Conectarse() == true) {
 
-            $query = $this->con->conexion->query("SELECT * FROM usuario WHERE usuario = '$user' ");
+            $query = $this->con->conexion->query("SELECT u.usuario,u.rol,u.estado,e.nombres,e.id as id_empleado,u.contrasenia
+                                                FROM usuario u
+                                                INNER JOIN empleado e ON e.id = u.id_empleado
+                                                WHERE u.usuario = '$user' ");
             
             $i=0;
             while($fila = $query->fetch_assoc()){

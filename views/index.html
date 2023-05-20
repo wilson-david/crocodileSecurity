@@ -52,23 +52,16 @@
                 async: false,
                 data: { username: user, password: pass },
                 success: function(result){
-                    if( result.status == "success" ){
-                        window.location = result.data.url;
-                    }else if(result.status == "error" && result.error_description == "user_dose_not_exist"){
-                        toastr["error"]("Datos de usuario incorrectos", "Error");
-                        $("#pass").val('');
-                    }else if(result.status == "error" && result.error_description == "pass_not_match"){
-                        toastr["error"]("Datos de usuario incorrectos", "Error");
-                        $("#pass").val('');
-                    }else if(result.status == "error" && result.error_description == "no_db"){
-                        toastr["error"]("Ha ocurrido un error por favor intente de nuevo mas tarde", "Error");
-                        $("#pass").val('');
-                    }else if(result.status == "error" && result.error_description == "captcha_error"){
-                        toastr["error"]("Codigo de seguridad incorrecto", "Error");
-                        $("#pass").val('');
-                    }else if(result.status == "error" && result.error_description == "user_inactive"){
-                        toastr["error"]("El Usuario se encuentra Inactivo", "Error");
-                        $("#pass").val('');
+                    console.log(result);
+                    if(result.success == "success" ){
+                        location.href = "../views/menu.php";
+
+                    }else if(result.success == "datos_erroneos" ){
+                        alert("Datos de usuario incorrectos");
+                        $("#password").val('');
+                    }else if(result.user_dose_not_exist == "error"){
+                        alert("El usuario no se existe");
+                        $("#password").val('');
                     }
                 }
             });

@@ -18,7 +18,7 @@
                 <h3>Usuario</h3>
                 <form class="row g-3 needs-validation" id="formulario" method="POST" action="javascript:guardarInfo()" novalidate>
                     <input type="hidden" id="id_usuario" value="0">
-                    <div class="col-md-4">
+<!--                     <div class="col-md-4">
                         <label for="validationCustom04" class="form-label">Tipo de documento: (*)</label>
                         <select class="form-select" id="tipo_documento" name="" required>
                             <option selected disabled value="">Seleccione</option>
@@ -28,15 +28,15 @@
                         <div class="invalid-feedback">
                             Seleccione un tipo de documento
                         </div>
-                    </div>
-                    <div class="col-md-4">
+                    </div> -->
+<!--                     <div class="col-md-4">
                         <label for="validationCustom02" class="form-label">Documento: (*)</label>
                         <input type="text" class="form-control" name="" id="num_doc" required>
                         <div class="invalid-feedback">
                             El campo documento no puede estar vacio
                         </div>
-                    </div>
-                    <div class="col-md-4">
+                    </div> -->
+<!--                     <div class="col-md-4">
                         <label for="validationCustomUsername" class="form-label">E-mail: (*)</label>
                         <div class="input-group has-validation">
                             <input type="text" class="form-control" name="" id="correo" aria-describedby="inputGroupPrepend" required>
@@ -44,17 +44,26 @@
                                 Este campo no puede estar vacio
                             </div>
                         </div>
-                    </div>
-                    <div class="col-md-6">
+                    </div> -->
+<!--                     <div class="col-md-4">
                         <label for="validationCustom03" class="form-label">Nombres: (*)</label>
                         <input type="text" class="form-control" name="" id="nombres" required>
                         <div class="invalid-feedback">
                             Este campo no puede estar vacio
                         </div>
-                    </div>
-                    <div class="col-md-6">
+                    </div> -->
+<!--                     <div class="col-md-4">
                         <label for="validationCustom03" class="form-label">Apellido: (*)</label>
                         <input type="text" class="form-control" name="" id="apellidos" required>
+                        <div class="invalid-feedback">
+                            Este campo no puede estar vacio
+                        </div>
+                    </div> -->
+                    <div class="col-md-4">
+                        <label for="validationCustom03" class="form-label">Empleado: (*)</label>
+                        <select class="form-select" id="empleado" name="" required>
+                            <option selected disabled value="">Seleccione</option>
+                        </select>
                         <div class="invalid-feedback">
                             Este campo no puede estar vacio
                         </div>
@@ -70,8 +79,9 @@
                         <label for="validationCustom04" class="form-label">Rol: (*)</label>
                         <select class="form-select" id="tipo_rol" name="" required>
                             <option selected disabled value="">Seleccione</option>
-                            <option value="admin">admin</option>
-                            <option value="user1">Usuario</option>
+                            <option value="1">Super admin</option>
+                            <option value="2">admin</option>
+                            <option value="3">empleado</option>
                         </select>
                         <div id="contenedor" class="invalid-feedback">
                             Seleccione un Rol
@@ -103,15 +113,10 @@
             <div class="row">
                 <div class="col-sm-12">
                     <br>
-                    <table id="tabla_usuario" class="display table table-striped table-hover" cellspacing="0">
-                    <thead>
-                        <tr>
+                    <table id="tabla_usuario"  class="display table table-striped table-hover " cellspacing="0">
+                    <thead style="text-align: center;">
+                        <tr >
                             <th style="text-align: center;">Acciones</th>
-                            <th style="min-width: 100px; text-align: center;">Nombre</th>
-                            <th style="min-width: 100px; text-align: center;">Apellido</th>
-                            <th style="text-align: center;">Tipo doc</th>
-                            <th style="min-width: 150px; text-align: center;">#Documento</th>
-                            <th style="min-width: 150px; text-align: center;">Correo</th>
                             <th style="min-width: 150px; text-align: center;">Usuario</th>
                             <th style="min-width: 150px; text-align: center;">Rol</th>
                             <th style="text-align: center;">Estado</th>
@@ -154,7 +159,7 @@
         })
     })()
     
-    $("#tabla_usuario").DataTable({
+   /*  $("#tabla_usuario").DataTable({
                 "scrollX": true,
                 "ordering": true,
                 "searching": false,
@@ -164,7 +169,7 @@
                     [10, 25, 50, -1],
                     [10, 25, 50, "All"]
                 ],
-                "columnDefs": [{ "orderable": false, "className": "text-center", "targets": [0] }],
+                "columnDefs": [{ "orderable": false, "targets": [0] }],
                 "pageLength": 10,
                 "bLengthChange": false,
                 "oLanguage": {
@@ -181,9 +186,10 @@
                     "sInfoFiltered": "(Filtrado de un total de _MAX_ registros)"
                     //"sProcessing": "<img src='../../../img/giphy.gif' width='50'/>"
                 }
-            });
+            }); */
 
     consultar();
+    consultar_empleado();
     function consultar(){
         $.ajax({
             url: "../../controllers/usuario/getUsuario.php",
@@ -196,29 +202,45 @@
             }
         });
     }
+    
 
+    function consultar_empleado(){
+        $.ajax({
+            url: "../../controllers/horario/getDatos.php",
+            dataType: 'json',
+            success: function(data) {
+                $("#empleado").append(data.CONTENIDO);
+
+            },
+            error: function(xhr, status, error) {
+                console.log("Error al procesar la solicitud:", error);
+            }
+        });
+    }
     function guardarInfo() {
             let id = $("#id_usuario").val();
-            let nombre = $("#nombres").val();
+            /* let nombre = $("#nombres").val();
             let apellido = $("#apellidos").val();
             let tipo_doc = $("#tipo_documento").val();    
             let num_doc = $("#num_doc").val();
-            let correo = $("#correo").val();
+            let correo = $("#correo").val(); */
             let usuario = $("#usuario").val();
             let rol = $("#tipo_rol").val();
+            let id_empleado = $("#empleado").val();
             
             $.ajax({
                 url: "../../controllers/usuario/setUsuario.php",
                 type: 'POST',
                 data: {
                     id:id,
-                    nombre: nombre,
+                    /* nombre: nombre,
                     apellido: apellido,
                     tipo_doc: tipo_doc,
                     num_doc: num_doc,
-                    correo: correo,
+                    correo: correo, */
                     usuario: usuario,
-                    rol:rol
+                    rol:rol,
+                    id_empleado: id_empleado
                 },
                 dataType: 'json',
                 success: function(data) {
@@ -240,11 +262,11 @@
 
         function actualizar() {
             let id = $("#id_usuario").val();
-            let nombre = $("#nombres").val();
+            /* let nombre = $("#nombres").val();
             let apellido = $("#apellidos").val();
             let tipo_doc = $("#tipo_documento").val();    
             let num_doc = $("#num_doc").val();
-            let correo = $("#correo").val();
+            let correo = $("#correo").val(); */
             let usuario = $("#usuario").val();
             let rol = $("#tipo_rol").val();
             let pass = $("#pass").val();
@@ -255,11 +277,11 @@
                 type: 'POST',
                 data: {
                     id:id,
-                    nombre: nombre,
+                   /*  nombre: nombre,
                     apellido: apellido,
                     tipo_doc: tipo_doc,
                     num_doc: num_doc,
-                    correo: correo,
+                    correo: correo, */
                     usuario: usuario,
                     rol:rol,
                     pass:pass,
@@ -269,8 +291,7 @@
                 success: function(data) {
                     if(data.success === 'update'){
                             alert("actualizo");
-                            limpiar();
-                            window.location.reload();
+                            location.reload();        
                         } else {
                             alert("No guardo");
                             /* toastr.warning("Inventario", "No se logr\u00f3 cargar el inventario."); */
@@ -281,7 +302,7 @@
 
 
         //faltan parametros
-        function cargar_datos(id,nombre,apellido,tipo_doc,num_doc,correo,estado,usuario,pass,rol){
+        function cargar_datos(id,usuario,pass,rol,estado,id_empleado){
         $("#btn_guardar").css('display','none');
         $("#btn_actualizar").css('display','');    
         $("#label_estado").css('display','');    
@@ -290,15 +311,16 @@
         $("#pass").css('display','');    
 
         $("#id_usuario").val(id);
-        $("#nombres").val(nombre);
+        /* $("#nombres").val(nombre);
         $("#apellidos").val(apellido);
         $("#tipo_documento").val(tipo_doc);    
         $("#num_doc").val(num_doc);
-        $("#correo").val(correo);
+        $("#correo").val(correo); */
         $("#usuario").val(usuario);
         $("#estado").val(estado)
         $("#pass").val(pass)
         $("#tipo_rol").val(rol); 
+        $("#empleado").val(id_empleado); 
 
     }
 </script>

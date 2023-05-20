@@ -10,15 +10,14 @@ class Usuario{
         $this->con = new Conexion;
     }
 
-    function registrar_usuario($nombre,$apellido,$tipo_doc,$num_doc,$correo,$usuario,$rol,$fecha_crea
-    ) {
+    function registrar_usuario($usuario,$rol,$fecha_crea,$id_empleado) {
         if ($this->con == null) {
             $this->con = new Conexion();
         }
         if ($this->con->Conectarse() == true) {
             $query = "INSERT INTO usuario 
-                        (tipo_documento,documento,correo,nombres,apellidos,usuario,rol,fecha_crea)
-                    VALUES ('$tipo_doc','$num_doc','$correo','$nombre','$apellido','$usuario','$rol','$fecha_crea')";
+                        (usuario,rol,fecha_crea,id_empleado)
+                    VALUES ('$usuario','$rol','$fecha_crea',$id_empleado)";
 
 
             if (mysqli_query($this->con->conexion, $query)) {
@@ -28,18 +27,13 @@ class Usuario{
         }
     }
 
-    function actualizar_usuario($id,$nombre,$apellido,$tipo_doc,$num_doc,$correo,$usuario,$rol,$fecha_sistema,$pass,$estado) {
+    function actualizar_usuario($id,$usuario,$rol,$fecha_sistema,$pass,$estado) {
         if ($this->con == null) {
             $this->con = new Conexion();
         }
         if ($this->con->Conectarse() == true) {
             $query = "UPDATE usuario 
-                        SET tipo_documento = '$tipo_doc',
-                            documento = '$num_doc',
-                            correo = '$correo',
-                            nombres = '$nombre',
-                            apellidos = '$apellido',
-                            usuario = '$usuario',
+                        SET usuario = '$usuario',
                             rol = '$rol',
                             estado = $estado,
                             contrasenia  = '$pass',
@@ -61,7 +55,9 @@ class Usuario{
         $data = [];
         if ($this->con->Conectarse() == true) {
 
-            $query = $this->con->conexion->query("SELECT * FROM usuario ");
+            $query = $this->con->conexion->query("SELECT u.id,u.usuario,u.rol,u.estado,e.id as id_empleado,u.contrasenia
+                                                        FROM usuario u
+                                                        INNER JOIN empleado e ON e.id = u.id_empleado ");
             
             $i=0;
             while($fila = $query->fetch_assoc()){
